@@ -79,34 +79,34 @@ var warnsign = function(sign){
     return "🌬️";
   }
   else if(sign=="WHOT"){
-    return "<span style=\"color:red\">🌡</span>";
+    return "<span style=\"color:red\">🌡H</span>";
   }
   else if(sign=="WCOLD"){
-    return "<span style=\"color:blue\">🌡</span>";
+    return "<span style=\"color:blue\">🌡C</span>";
   }
   else if(sign=="WTMW"){
     return "🌊";
   }
   else if(sign=="WRAINA"){
-    return "<span style=\"color:yellow\">🌧</span>";
+    return "<span style=\"color:yellow\">🌧A</span>";
   }
   else if(sign=="WRAINR"){
-    return "<span style=\"color:red\">🌧</span>";
+    return "<span style=\"color:red\">🌧R</span>";
   }
   else if(sign=="WRAINB"){
-    return "<span style=\"color:gray\">🌧Black</span>";
+    return "<span style=\"color:gray\">🌧B</span>";
   }
   else if(sign=="WFIRER"){
-    return "<span style=\"color:red\">🔥Red</span>";
+    return "<span style=\"color:red\">🔥R</span>";
   }
   else if(sign=="WFIREY"){
-    return "<span style=\"color:yellow\">🔥Yellow</span>";
+    return "<span style=\"color:yellow\">🔥Y</span>";
   }
   else if(sign=="TC1"){
-    return "<span style=\"font-weight:1000;\">T</span>1";
+    return "<span style=\"font-weight:1000;\">T1</span>1";
   }
   else if(sign=="TC3"){
-    return "<span style=\"font-weight:3000;\">⊥</span>3";
+    return "<span style=\"font-weight:3000;\">⊥3</span>3";
   }
   else if(sign=="TC8NE"){
     return "⯭8-NE";
