@@ -159,15 +159,19 @@ var hasSubtype = function(c){
   return (c=="WFIRE")||(c=="WTCSGNL")||(c=="WRAIN");
 }
 
-if (elem.requestFullscreen){
-  elem.requestFullscreen();
+function fullscreen(){
+  if (document.documentElement.requestFullscreen){
+    document.documentElement.requestFullscreen();
+  }
+  else if (document.documentElement.webkitRequestFullscreen){
+    document.documentElement.webkitRequestFullscreen();
+  }
+  else if (document.documentElement.msRequestFullscreen){
+    document.documentElement.msRequestFullscreen();
+  }
 }
-else if (elem.webkitRequestFullscreen){
-  elem.webkitRequestFullscreen();
-}
-else if (elem.msRequestFullscreen){
-  elem.msRequestFullscreen();
-}
+
+alert("Note: Enter fullscreen mode by clicking on the clock.")
 
 function startTime() {
   var today = new Date();
@@ -273,69 +277,73 @@ function startTime() {
 
   //console.log(lim)
 
-  if(ws==0){
-    var weat = "";
-    if(wea.icon.length > 1){
-      weat = (wea.temperature.data[8].value) + "°C  " + getIc(wea.icon[0]) + "➡" + getIc(wea.icon[1]);
-    }
-    else{
-      weat = (wea.temperature.data[8].value) + "°C  " + getIc(wea.icon);
-    }
-    var stxt = "";
-    var objts;
-    var styp = "";
-    
-    //try{
-      console.log(wsig)
-      for(objts in wsig.details){
-        //console.log(objts)
-        //console.log(wsig.details[objts]);
-        if(hasSubtype(wsig.details[objts].warningStatementCode)){
-          styp = wsig.details[objts].subtype;
-          //console.log(wsig.details[objts].warningStatementCode)
-		      if(wsig.details[objts].warningStatementCode=="WTCSGNL"){
-            //console.log(wsig.details[objts].contents)
-			      tcsig = String(wsig.details[objts].contents).replace(/,/g,"")
-			      lim = 3
-		      }
-        }
-        else{
-          styp = wsig.details[objts].warningStatementCode;
-        }
-        weat = weat + " " + warnsign(styp);
-        //console.log(stxt);
-      }
-    //}
-    //catch(e){
-
-    //}
-    document.getElementById("wsc").innerHTML = weat;
-  }
-  else if(ws==1||ws==2){
-    document.getElementById("txt").innerHTML = hms;
-  }
-  else if(ws==2){
-    document.getElementById("weather").style.animation = "scrolls 7s 1 linear";
-    document.getElementById("weather").innerHTML = "";
-  }
-  else if(ws==3){
-    //console.log(document.getElementById("weather").style.animationPlayState);
-    
-    var wtxt = "";
-    var objt;
-    for(objt in swt.swt){
-	var objti = Number(objt) + 1
-      wtxt = wtxt + " " + objti + ":" + swt.swt[objt].desc;
-      //console.log(wtxt);
-    }
-	wtxt += tcsig
-    delim = wtxt.length/5;
-    document.querySelector(":root").style.setProperty("--st",((-1*(wtxt.length*60)) + "px"));
-    document.getElementById("weather").style.animation = "scrollsb " + (delim) + "s 1 linear";
-    document.getElementById("weather").innerHTML = wtxt;
-  }
   
+  var weat = "";
+  if(wea.icon.length > 1){
+    weat = (wea.temperature.data[8].value) + "°C  " + getIc(wea.icon[0]) + "➡" + getIc(wea.icon[1]);
+  }
+  else{
+    weat = (wea.temperature.data[8].value) + "°C  " + getIc(wea.icon);
+  }
+  var stxt = "";
+  var objts;
+  var styp = "";
+  
+  //try{
+    //console.log(wsig)
+    for(objts in wsig.details){
+      //console.log(objts)
+      //console.log(wsig.details[objts]);
+      if(hasSubtype(wsig.details[objts].warningStatementCode)){
+        styp = wsig.details[objts].subtype;
+        //console.log(wsig.details[objts].warningStatementCode)
+	      if(wsig.details[objts].warningStatementCode=="WTCSGNL"){
+          //console.log(wsig.details[objts].contents)
+		      tcsig = String(wsig.details[objts].contents).replace(/,/g,"")
+		      lim = 3
+	      }
+      }
+      else{
+        styp = wsig.details[objts].warningStatementCode;
+      }
+      weat = weat + " " + warnsign(styp);
+      //console.log(stxt);
+    }
+  //}
+  //catch(e){
+  //}
+  document.getElementById("wsc").innerHTML = weat;
+
+  document.getElementById("txt").innerHTML = hms;
+  
+  //document.getElementById("weather").style.animation = "scrolls 7s 1 linear";
+  document.getElementById("weather").innerHTML = "";
+
+  var wtxt = "";
+  var objt;
+  for(objt in swt.swt){
+	  var objti = Number(objt) + 1
+    wtxt = wtxt + " " + objti + ":" + swt.swt[objt].desc;
+    //console.log(wtxt);
+  }
+	wtxt += tcsig
+  delim = wtxt.length/5;
+  document.getElementById("weather").innerHTML = wtxt;
+  //console.log((-1*(wtxt.length*60)))
+  document.querySelector(":root").style.setProperty("--st",((-1*(wtxt.length*60)) + "px"));
+  document.getElementById("weather").style.animation = "scrollsb " + (delim) + "s 1 linear";
+  //}
 }
+
+document.getElementById("weather").addEventListener("animationend", function(){
+  console.log("fd")
+  document.querySelector(":root").style.setProperty("--st",((-1*(wtxt.length*60)) + "px"));
+  document.getElementById("weather").style.animation = "scrollsb " + (delim) + "s 1 linear";
+}, false);
+
+document.getElementById("weather").addEventListener("animationiteration", function(){
+  console.log("hysu")
+}, false);
 
 function checkTime(i) {
   if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
