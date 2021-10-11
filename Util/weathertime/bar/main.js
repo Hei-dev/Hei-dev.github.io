@@ -145,7 +145,7 @@ var warnsign = function(sign){
     return "▲8-NW";
   }
   else if(sign=="TC9"){
-    return "<img src='TyphoonSignal/9_white.png' style='height:50px;'/>9";
+    return "<img src='../TyphoonSignal/9_white.png' style='height:50px;'/>9";
   }
   else if(sign=="TC10"){
     return "<span style='font-weight:3000'>+</span>10";
