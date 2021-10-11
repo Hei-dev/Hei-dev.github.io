@@ -280,9 +280,8 @@ function startTime() {
     document.getElementById("weather").innerHTML = hms;
   }
   else if(ws==2){
-    //console.log(document.getElementById("weather").style.animationPlayState);
     document.getElementById("weather").style.animation = "scrolls 7s 1 linear";
-    document.getElementById("weather").innerHTML = "留心上課 Pay attention to lesson";
+    document.getElementById("weather").innerHTML = "";
   }
   else if(ws==3){
     //console.log(document.getElementById("weather").style.animationPlayState);
