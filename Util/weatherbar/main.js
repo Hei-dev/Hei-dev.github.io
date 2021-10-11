@@ -45,6 +45,30 @@ var getIc = function(num){
   else if(num == 65){
     return "⛈";
   }
+  else if(num == 70){
+    return "<img src='https://www.hko.gov.hk/images/HKOWxIconOutline/pic70.png' style='width:50px; height:50px'/>"
+  }
+  else if(num == 71){
+    return "<img src='https://www.hko.gov.hk/images/HKOWxIconOutline/pic71.png' style='width:50px; height:50px'/>"
+  }
+  else if(num == 71){
+    return "<img src='https://www.hko.gov.hk/images/HKOWxIconOutline/pic72.png' style='width:50px; height:50px'/>"
+  }
+  else if(num == 71){
+    return "<img src='https://www.hko.gov.hk/images/HKOWxIconOutline/pic73.png' style='width:50px; height:50px'/>"
+  }
+  else if(num == 71){
+    return "<img src='https://www.hko.gov.hk/images/HKOWxIconOutline/pic74.png' style='width:50px; height:50px'/>"
+  }
+  else if(num == 71){
+    return "<img src='https://www.hko.gov.hk/images/HKOWxIconOutline/pic75.png' style='width:50px; height:50px'/>"
+  }
+  else if(num == 71){
+    return "<img src='https://www.hko.gov.hk/images/HKOWxIconOutline/pic76.png' style='width:50px; height:50px'/>"
+  }
+  else if(num == 71){
+    return "<img src='https://www.hko.gov.hk/images/HKOWxIconOutline/pic77.png' style='width:50px; height:50px'/>"
+  }
   else if(num == 80){
     return "🌪";
   }
@@ -76,7 +100,7 @@ var warnsign = function(sign){
     return "⚡";
   }
   else if(sign=="WMSGNL"){
-    return "🌬️";
+    return "<img src='https://www.hko.gov.hk/tc/wxinfo/dailywx/images/msn.gif' style='width:50px; height:50px'/>";
   }
   else if(sign=="WHOT"){
     return "<span style=\"color:red\">🌡H</span>";
@@ -109,10 +133,10 @@ var warnsign = function(sign){
     return "<span style=\"font-weight:3000;\">⊥3</span>3";
   }
   else if(sign=="TC8NE"){
-    return "⯭8-NE";
+    return "<img src='TyphoonSignal/8NE_white.png' style='height:50px;'/>8-NE";
   }
   else if(sign=="TC8SE"){
-    return "⯯8-SE";
+    return "<img src='TyphoonSignal/8SE_white.png' style='height:50px;'/>8-SE";
   }
   else if(sign=="TC8SW"){
     return "▼8-SW";
@@ -121,7 +145,7 @@ var warnsign = function(sign){
     return "▲8-NW";
   }
   else if(sign=="TC9"){
-    return " 9";
+    return "<img src='TyphoonSignal/9_white.png' style='height:50px;'/>9";
   }
   else if(sign=="TC10"){
     return "+10";
@@ -196,9 +220,9 @@ function startTime() {
     xhttp3.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
            // Typical action to be performed when the document is ready:
-          wsig = JSON.parse(xhttp3.responseText);
+          //wsig = JSON.parse(xhttp3.responseText);
           //debug
-          //wsig = { "details": [{ "contents": ["天文台在上午 11 時 15 分發出紅色暴雨警告信號。 "], "subtype": "WRAINR", "warningStatementCode": "WRAIN", "updateTime": "2020-09-24T11:15:00+08:00" },{ "contents": ["雷暴警告", "天文台在 9 月 24 日上午 11 時 40 分發 出之雷暴警告，有效時間延長至今日下午 7 時 30 分，預料香港有雷暴。", " 雷暴發生時，請採取以下預防措施：", "1. 留在室內。在室外的人士應躲入建 築物內。", "2. 切勿站立於高地或接近導電的物體、樹木或桅杆。"], "warningStatementCode": "WTS", "updateTime": "2020-09-24T05:00:00+08:00" }, { "contents": ["強烈季候風信號在 11 時 15 分發出。"], "warningStatementCode": "WCOLD", "updateTime": "2020-09-24T11:15:00+08:00" }, { "contents": ["山泥傾瀉警告：\n\n 天文台在 11:15 發出山泥傾瀉 警告。"], "warningStatementCode": "WL", "updateTime": "2020-09-24T11:15:00+08:00" } ] };
+          //wsig = { "details": [{ "contents": ["天文台在上午 11 時 15 分發出紅色暴雨警告信號。 "], "subtype": "TC9", "warningStatementCode": "WRAIN", "updateTime": "2020-09-24T11:15:00+08:00" },{ "contents": ["雷暴警告", "天文台在 9 月 24 日上午 11 時 40 分發 出之雷暴警告，有效時間延長至今日下午 7 時 30 分，預料香港有雷暴。", " 雷暴發生時，請採取以下預防措施：", "1. 留在室內。在室外的人士應躲入建 築物內。", "2. 切勿站立於高地或接近導電的物體、樹木或桅杆。"], "warningStatementCode": "WTS", "updateTime": "2020-09-24T05:00:00+08:00" }, { "contents": ["強烈季候風信號在 11 時 15 分發出。"], "warningStatementCode": "WCOLD", "updateTime": "2020-09-24T11:15:00+08:00" }, { "contents": ["山泥傾瀉警告：\n\n 天文台在 11:15 發出山泥傾瀉 警告。"], "warningStatementCode": "WL", "updateTime": "2020-09-24T11:15:00+08:00" } ] };
           document.getElementById("weather").innerHTML = "updating";
           
           ////console.log(weather.details)
