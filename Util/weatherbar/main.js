@@ -220,7 +220,7 @@ function startTime() {
     xhttp3.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
            // Typical action to be performed when the document is ready:
-          //wsig = JSON.parse(xhttp3.responseText);
+          wsig = JSON.parse(xhttp3.responseText);
           //debug
           //wsig = { "details": [{ "contents": ["天文台在上午 11 時 15 分發出紅色暴雨警告信號。 "], "subtype": "TC9", "warningStatementCode": "WRAIN", "updateTime": "2020-09-24T11:15:00+08:00" },{ "contents": ["雷暴警告", "天文台在 9 月 24 日上午 11 時 40 分發 出之雷暴警告，有效時間延長至今日下午 7 時 30 分，預料香港有雷暴。", " 雷暴發生時，請採取以下預防措施：", "1. 留在室內。在室外的人士應躲入建 築物內。", "2. 切勿站立於高地或接近導電的物體、樹木或桅杆。"], "warningStatementCode": "WTS", "updateTime": "2020-09-24T05:00:00+08:00" }, { "contents": ["強烈季候風信號在 11 時 15 分發出。"], "warningStatementCode": "WCOLD", "updateTime": "2020-09-24T11:15:00+08:00" }, { "contents": ["山泥傾瀉警告：\n\n 天文台在 11:15 發出山泥傾瀉 警告。"], "warningStatementCode": "WL", "updateTime": "2020-09-24T11:15:00+08:00" } ] };
           document.getElementById("weather").innerHTML = "updating";
@@ -276,6 +276,7 @@ function startTime() {
     var styp = "";
     
     //try{
+      console.log(wsig)
       for(objts in wsig.details){
         //console.log(objts)
         //console.log(wsig.details[objts]);
