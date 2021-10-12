@@ -9,6 +9,10 @@ var wsig;
 var detime = 1;
 var delim = 0;
 var tcsig = "";
+var warncount = 0;
+var warns;
+var warndisplay = ""
+var curwcount = 0;
 //document.getElementById("weather").classList.add('notransition');
 
 var getIc = function(num){
@@ -130,13 +134,21 @@ var warnsign = function(sign){
     return "<span style=\"font-weight:1000;\">T1</span>1";
   }
   else if(sign=="TC3"){
-    return "<span style=\"font-weight:3000;\">⊥3</span>3";
+    return "<img src='../TyphoonSignal/3_white.png' style='height:120px'/>3";
+  }
+  else if(sign=="WTCPRE8"){
+    return "<span style='font-weight:bold; font-size:100px'> >> "
+    + "<img src='../TyphoonSignal/8NE_white.png' style='height:90px;'/>"
+    + "<img src='../TyphoonSignal/8SE_white.png' style='height:90px;'/>"
+    + "▼"
+    + "▲"
+    + "8</span>"
   }
   else if(sign=="TC8NE"){
-    return "<img src='TyphoonSignal/8NE_white.png' style='height:50px;'/>8-NE";
+    return "<img src='../TyphoonSignal/8NE_white.png' style='height:120px;'/>8-NE";
   }
   else if(sign=="TC8SE"){
-    return "<img src='TyphoonSignal/8SE_white.png' style='height:50px;'/>8-SE";
+    return "<img src='../TyphoonSignal/8SE_white.png' style='height:120px;'/>8-SE";
   }
   else if(sign=="TC8SW"){
     return "▼8-SW";
@@ -145,7 +157,7 @@ var warnsign = function(sign){
     return "▲8-NW";
   }
   else if(sign=="TC9"){
-    return "<img src='../TyphoonSignal/9_white.png' style='height:50px;'/>9";
+    return "<img src='../TyphoonSignal/9_white.png' style='height:120px;'/>9";
   }
   else if(sign=="TC10"){
     return "<span style='font-weight:3000'>+</span>10";
@@ -237,6 +249,8 @@ function startTime() {
           wsig = JSON.parse(xhttp3.responseText);
           //debug
           //wsig = { "details": [{ "contents": ["天文台在上午 11 時 15 分發出紅色暴雨警告信號。 "], "subtype": "TC9", "warningStatementCode": "WRAIN", "updateTime": "2020-09-24T11:15:00+08:00" },{ "contents": ["雷暴警告", "天文台在 9 月 24 日上午 11 時 40 分發 出之雷暴警告，有效時間延長至今日下午 7 時 30 分，預料香港有雷暴。", " 雷暴發生時，請採取以下預防措施：", "1. 留在室內。在室外的人士應躲入建 築物內。", "2. 切勿站立於高地或接近導電的物體、樹木或桅杆。"], "warningStatementCode": "WTS", "updateTime": "2020-09-24T05:00:00+08:00" }, { "contents": ["強烈季候風信號在 11 時 15 分發出。"], "warningStatementCode": "WCOLD", "updateTime": "2020-09-24T11:15:00+08:00" }, { "contents": ["山泥傾瀉警告：\n\n 天文台在 11:15 發出山泥傾瀉 警告。"], "warningStatementCode": "WL", "updateTime": "2020-09-24T11:15:00+08:00" } ] };
+          
+          //{"details":[{"contents":["香港天文台發出最新熱帶氣旋警報","三號強風信號，現正生效。","預料本港平均風速每小時41至62公里。","在下午4時，強烈熱帶風暴圓規集結在香港之東南約480公里，即在北緯18.8度，東經116.9度附近，預料向西移動，時速約25公里，橫過南海北部，移向海南島一帶。","在圓規與東北季候風的共同影響下，廣東沿岸普遍吹強風，離岸及高地間中吹烈風。隨著圓規逐漸靠近廣東沿岸，其外圍雨帶會在今晚為本港帶來驟雨及狂風，本地風勢亦會進一步增強，天文台會在下午五時二十分或以前發出八號烈風或暴風信號。","圓規引致的風暴潮和大雨可能令低窪地區水浸，市民應做好防風防水浸措施。海面有大浪和湧浪，市民應遠離岸邊並停止所有水上活動。","在過去一小時，大老山、橫瀾島及沙洲分別錄得的最高持續風速為每小時79、68及58公里，最高陣風分別為每小時100、76及73公里。","三號強風信號－防風措施報告：","1. 請盡快完成防風措施，將容易被風吹倒的物件綁緊或搬入室內。檢查所有門窗是否可以關閉。","2. 請將堆積在渠道上的樹葉與垃圾清除。","3. 基於安全理由，建議市民取消所有戶外活動。請為有需要人士包括長者及不良於行者提供適當支援。","4. 市民應避免身處當風地點。在高速公路或天橋上的駕車人士要提防猛烈陣風吹襲。","5. 建造業及物業管理從業員請設法將室外的懸空裝置和臨時搭建物綁緊或安放至地面，以及盡快完成防風措施。","6. 小型船隻船主應立即完成一切安全措施及返回附近的避風塘。","7. 未駛回避風塘的小型船隻，應立即就近找地方避風，下錨時應使用大錨，並檢查甲板上的裝置是否縛緊。","8. 請留意電台、電視台或瀏覽香港天文台網頁及流動應用程式有關風暴的最新消息。"],"subtype":"TC3","warningStatementCode":"WTCSGNL","updateTime":"2021-10-12T15:45:00+08:00"},{"contents":["香港天文台宣布會在今天（10月12日）下午5時20分或以前發出八號熱帶氣旋警告信號，本港風勢將會增強。","政府提醒返家路程偏遠、轉折或居住離島的市民，現應啟程回家。政府已通知屬下此類員工下班。","教育局宣布：所有學校今日停課。學校應實施應變措施，確保學生安全，並在安全情況下，安排學生返家。"],"warningStatementCode":"WTCPRE8","updateTime":"2021-10-12T15:20:00+08:00"}]}
           document.getElementById("weather").innerHTML = "updating";
           
           ////console.log(weather.details)
@@ -273,7 +287,6 @@ function startTime() {
   ////console.log(wea.temperature.data[8].place);
   document.getElementById("weather").style.animation = "";
   document.getElementById("weather").style.visibility = "visible";
-  document.getElementById("wsc").style.visibility = "hidden";
 
   //console.log(lim)
 
@@ -285,12 +298,16 @@ function startTime() {
   else{
     weat = (wea.temperature.data[8].value) + "°C  " + getIc(wea.icon);
   }
+
   var stxt = "";
   var objts;
   var styp = "";
   
   //try{
     //console.log(wsig)
+    warns = []
+
+    warncount = 0
     for(objts in wsig.details){
       //console.log(objts)
       //console.log(wsig.details[objts]);
@@ -306,18 +323,41 @@ function startTime() {
       else{
         styp = wsig.details[objts].warningStatementCode;
       }
-      weat = weat + " " + warnsign(styp);
+      warncount++;
+
+      //console.log(warns)
+      warns.push(warnsign(styp));
       //console.log(stxt);
+
     }
   //}
   //catch(e){
   //}
   document.getElementById("wsc").innerHTML = weat;
+  warndisplay = ""
+  i = 0;
+  if(sec%2==0 && warncount>3){
+    while(i<1){
+      warndisplay += warns[curwcount]
+      i++
+      curwcount++;
+      if(curwcount==warns.length-1){
+        curwcount = 0
+      }
+    }
+    
+  }
+  else{
+    for(i=0;i<warns.length;i++){
+      console.log(warns[i])
+      warndisplay += warns[i]
+    }
+  }
+  document.getElementById("warn").innerHTML = warndisplay;
 
   document.getElementById("txt").innerHTML = hms;
   
   //document.getElementById("weather").style.animation = "scrolls 7s 1 linear";
-  document.getElementById("weather").innerHTML = "";
 
   var wtxt = "";
   var objt;
@@ -331,19 +371,10 @@ function startTime() {
   document.getElementById("weather").innerHTML = wtxt;
   //console.log((-1*(wtxt.length*60)))
   document.querySelector(":root").style.setProperty("--st",((-1*(wtxt.length*60)) + "px"));
-  document.getElementById("weather").style.animation = "scrollsb " + (delim) + "s 1 linear";
+  document.getElementById("weather").style.animation = "scrollsb " + (delim) + "s infinite linear";
+  
   //}
 }
-
-document.getElementById("weather").addEventListener("animationend", function(){
-  console.log("fd")
-  document.querySelector(":root").style.setProperty("--st",((-1*(wtxt.length*60)) + "px"));
-  document.getElementById("weather").style.animation = "scrollsb " + (delim) + "s 1 linear";
-}, false);
-
-document.getElementById("weather").addEventListener("animationiteration", function(){
-  console.log("hysu")
-}, false);
 
 function checkTime(i) {
   if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
