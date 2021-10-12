@@ -130,7 +130,7 @@ var warnsign = function(sign){
     return "<span style=\"font-weight:1000;\">T1</span>1";
   }
   else if(sign=="TC3"){
-    return "<span style=\"font-weight:3000;\">⊥3</span>3";
+    return "<span style=\"font-weight:8000;\">⊥3</span>";
   }
   else if(sign=="TC8NE"){
     return "<img src='TyphoonSignal/8NE_white.png' style='height:50px;'/>8-NE";
