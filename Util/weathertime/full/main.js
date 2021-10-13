@@ -13,6 +13,7 @@ var warncount = 0;
 var warns;
 var warndisplay = ""
 var curwcount = 0;
+var region = -1;
 //document.getElementById("weather").classList.add('notransition');
 
 var getIc = function(num){
@@ -134,21 +135,21 @@ var warnsign = function(sign){
     return "<span style=\"font-weight:1000;\">T1</span>1";
   }
   else if(sign=="TC3"){
-    return "<img src='../TyphoonSignal/3_white.png' style='height:120px'/>3";
+    return "<img src='../TyphoonSignal/3_white.png' style='height:6vw;'/>3";
   }
   else if(sign=="WTCPRE8"){
     return "<span style='font-weight:bold; font-size:100px'> >> "
-    + "<img src='../TyphoonSignal/8NE_white.png' style='height:90px;'/>"
-    + "<img src='../TyphoonSignal/8SE_white.png' style='height:90px;'/>"
+    + "<img src='../TyphoonSignal/8NE_white.png' style='height:6vw;'/>"
+    + "<img src='../TyphoonSignal/8SE_white.png' style='height:6vw;'/>"
     + "▼"
     + "▲"
     + "8</span>"
   }
   else if(sign=="TC8NE"){
-    return "<img src='../TyphoonSignal/8NE_white.png' style='height:120px;'/>8-NE";
+    return "<img src='../TyphoonSignal/8NE_white.png' style='height:6vw;'/>8-NE";
   }
   else if(sign=="TC8SE"){
-    return "<img src='../TyphoonSignal/8SE_white.png' style='height:120px;'/>8-SE";
+    return "<img src='../TyphoonSignal/8SE_white.png' style='height:6vw;'/>8-SE";
   }
   else if(sign=="TC8SW"){
     return "▼8-SW";
@@ -157,7 +158,7 @@ var warnsign = function(sign){
     return "▲8-NW";
   }
   else if(sign=="TC9"){
-    return "<img src='../TyphoonSignal/9_white.png' style='height:120px;'/>9";
+    return "<img src='../TyphoonSignal/9_white.png' style='height:6vw;'/>9";
   }
   else if(sign=="TC10"){
     return "<span style='font-weight:3000'>+</span>10";
