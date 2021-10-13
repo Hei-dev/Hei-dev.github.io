@@ -370,11 +370,14 @@ function startTime() {
   delim = wtxt.length/5;
   document.getElementById("weather").innerHTML = wtxt;
   //console.log((-1*(wtxt.length*60)))
-  document.querySelector(":root").style.setProperty("--st",((-1*(wtxt.length*60)) + "px"));
-  document.getElementById("weather").style.animation = "scrollsb " + (delim) + "s infinite linear";
+  
+    document.querySelector(":root").style.setProperty("--st",((-1*(wtxt.length*60)) + "px"));
+    document.getElementById("weather").style.animation = "scrollsb " + (delim) + "s infinite linear";
   
   //}
 }
+
+
 
 function checkTime(i) {
   if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
