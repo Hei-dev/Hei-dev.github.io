@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="jquery-3.6.0.min.js"></script>
+<script src="main.js"></script>
+<meta charset="utf-8">
+</head>
+
+<body onload="startTime()" style="background-color:black; text-align: center;">
+
+<noscript>JavaScript not supported</noscript>
+
+<style>
+  :root{
+    --st:-40%;
+    --stw:-40%;
+  }
+
+  @keyframes scrolls {
+    from{left:130%;}
+    to{left:-210%;}
+  }
+  @keyframes scrollsb {
+    from{left:100%;}
+    to{left:var(--st);}
+  }
+
+  @keyframes scrollw {
+    from{left:100%;}
+    to{left:var(--stw);}
+  }
+
+  #txt { color:white; text-align:center; overflow: visible; font-family: Arial, Helvetica, sans-serif; font-size:20vw;}
+  #weather { color:white;
+    overflow:visible ;
+    font-family: Arial,"Microsoft JhengHei", Helvetica, sans-serif;
+    font-size:60px ; 
+    white-space:nowrap; 
+    position: absolute; 
+    background-color: black;
+  }
+  #wsc { color:white; text-align:center; overflow: visible; font-family: Arial, Helvetica, sans-serif; font-size: 8vw; position: relative; }
+  .notransition {
+    -webkit-transition: none !important;
+    -moz-transition: none !important;
+    -o-transition: none !important;
+    transition: none !important;
+  }
+
+  #warn {color:white; text-align:center; overflow: visible; font-family: Arial, Helvetica, sans-serif; font-size: 8vw; position: relative; }
+
+  .red{
+    color:red;
+  }
+
+</style>
+
+<div id="txt" onclick="fullscreen()"></div>
+<div style="display: inline-flex;"><div id="wsc"></div><div style="width:60px"></div><div id="warn"></div></div>
+<div id="weather"></div>
+
+<form>
+  <select name="dist" id="dist">
+    <option value="0:">Volvo</option>
+    <option value="saab">Saab</option>
+    <option value="mercedes">Mercedes</option>
+    <option value="audi">Audi</option>
+  </select>
+</form>
+
+</body>
+</html>
