@@ -1,0 +1,28 @@
+ai2ext =
+{
+    "Extra":{
+        /*ImageView*/
+        "Picture":{
+            "id":"src='",
+            "value":"'"
+        },
+        /*Slider*/
+        "MaxValue":{
+            "id":"max=",
+            "value":""
+        },
+        "MinValue":{
+            "id":"min=",
+            "value":""
+        },
+        "ThumbPosition":{
+            "id":"value=",
+            "value":""
+        },
+        /*TextBox*/
+        "Hint":{
+            "id":"placeholder='",
+            "value":"'"
+        }
+    }
+}

@@ -1,0 +1,92 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <input type="file" id="cFile">
+
+        <label id="lbl"></label>
+
+        <script type="text/javascript">
+        getStyle = function(d){
+            var style = ""
+            if('Width' in d){
+                style += 'width:' + d.Width + 'px; ';
+            }
+            if('Height' in d){
+                style += 'height:' + d.Height + 'px; ';
+            }
+            if('TextAlignment' in d){
+                var ali;
+                if(d.TextAlignment=='2'){
+                    style += 'text-align:right; ';
+                }
+                else if(d.TextAlignment=='1'){
+                    style += 'text-align:right; ';
+                }
+                
+                
+            }
+            if('BackgroundColor' in d){
+                style += 'background-color:#' + d.BackgroundColor.substring(3,9) + '; ';
+            }
+            if('TextColor' in d){
+                style += 'color:#' + d.TextColor.substring(3,9) + '; ';
+            }
+
+            //No Style Check
+            if(style != ""){
+                style = 'style="' + style + '"';
+            }
+            return style
+        }
+
+        getElement = function(d){
+            if(d.$Type=="Button"){
+                return '<button id="' + d.$Name + '" ' + getStyle(d) + '>'
+                    + d.Text + '</button>\n<br>';
+            }
+            else if(d.$Type=="Label"){
+                return '<label id="' + d.$Name + '" ' + getStyle(d) + '>'
+                    + d.Text + '</label>\n<br>';
+            }
+        }
+
+
+        function scmToHtml(obj){
+            var hcode = "";
+            hcode = '<html><head><meta charset="UTF-8"><title>'
+                    + obj.AppName + '/' + obj.$Name
+                    + '</title></head>\n<body>\n<div style="">'
+            
+            for(var i=0;i<obj.$Components.length;i++){
+                hcode += getElement(obj.$Components[i])
+            }
+            hcode += '</div></body></html>'
+            console.log(hcode)
+        }
+
+
+        var scn;
+            document.getElementById("cFile").addEventListener("change",function(e){
+                var f = new FileReader();
+                
+                f.onload = function(){
+                    //console.log("fbh");
+                    var tScm = f.result.split("\n");
+                    try{
+                        scn = JSON.parse(tScm[2]);
+                        console.log(scn);
+                        scmToHtml(scn.Properties)
+                    }
+                    catch(err){
+                        console.log(err)
+                    }
+                    
+                }
+                f.readAsText(e.target.files[0]);
+                console.log("fbhagr");
+            });
+        </script>
+    </body>
+</html>

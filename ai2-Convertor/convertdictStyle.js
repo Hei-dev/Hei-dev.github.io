@@ -1,0 +1,29 @@
+ai2sty =
+{
+    "Style":{
+        "Width":{
+            "id":"width:",
+            "value":"px"
+        },
+        "Height":{
+            "id":"height:",
+            "value":"px"
+        },
+        "TextAlignment":{
+            "id":"text-alignment:",
+            "value":{
+                "0":"left",
+                "1":"center",
+                "2":"right"
+            }
+        },
+        "BackgroundColor":{
+            "id":"background-color:#",
+            "value":""
+        },
+        "TextColor":{
+            "id":"color:#",
+            "value":""
+        }
+    }
+}
