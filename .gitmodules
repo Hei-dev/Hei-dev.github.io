@@ -1,3 +1,6 @@
 [submodule "ai2-Convertors"]
 	path = ai2-Convertors
 	url = https://www.github.com/Hei-dev/ai2-Convertor
+[submodule "ai2-Convertor"]
+	path = ai2-Convertor
+	url = https://www.github.com/Hei-dev/ai2-Convertor
