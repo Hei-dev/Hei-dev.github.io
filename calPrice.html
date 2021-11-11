@@ -1,0 +1,27 @@
+<html>
+    <head>
+
+    </head>
+    <body>
+        
+    </body>
+        <script>
+            function addRow(){
+                
+            }
+        
+            var form = document.createElement("form").appendChild(document.createElement("button").addEventListener("click",addRow()))
+            form.setAttribute("id","mainf").
+            var body = document.getElementsByTagName("body").appendChild(form)
+            
+            
+            
+            var paid = [100,100,26]
+            var req = [75,84,67]
+            var i
+            for(i=0;i<paid.length;i++){
+                paid[i]-=req[i]
+            }
+            alert(paid)
+        </script>
+</html>
