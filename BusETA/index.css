@@ -19,7 +19,7 @@
 #tc1{
     font-size: 12vw;
     font-family: Arial, Helvetica, sans-serif;
-    overflow: hidden;
+    overflow: visible;
     white-space: nowrap;
     z-index: -1 ;
     position: relative;
@@ -27,7 +27,7 @@
 #en1{
     font-size: 8vw;
     font-family: Arial, Helvetica, sans-serif;
-    overflow: hidden;
+    overflow: visible;
     white-space: nowrap;
     z-index: -2 ;
     position: relative;
@@ -67,7 +67,7 @@
 
 @keyframes txtScroll {
     from { transform: translateX(100%); }
-    to { transform: translateX(-100%); }
+    to { transform: translateX(-110%); }
 }
 
 #tc1::-webkit-scrollbar {

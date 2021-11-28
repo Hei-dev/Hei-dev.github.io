@@ -3,6 +3,7 @@
 */
 
 const baseURL = "https://rt.data.gov.hk/v1/transport/citybus-nwfb"
+const KMBbaseURL = "https://data.etabus.gov.hk/v1/transport/kmb"
 var route = 13
 var bound = "inbound"
 var com = "NWFB"
@@ -13,6 +14,35 @@ var routeStopIds = []
 var logs = document.getElementById("logs")
 var instr = document.getElementById("instr")
 document.getElementById("sellist").style.display = "none"
+
+var numbersArr = [];
+for(let i=0;i<=9;i++){
+    numbersArr.push(String(i))
+}
+var letterArr = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("")
+var distName = ["尖沙咀",
+    "油麻地",
+    "旺角",
+    "深水埗",
+    "長沙灣",
+    "九龍塘",
+    "紅磡",
+    "土瓜灣",
+    "觀塘",
+    "九龍灣"
+]
+var distNameEn = [
+    "TSIM SHA TSUI",
+    "YAU MA TEI",
+    "MONG KOK",
+    "SHAM SHUI PO",
+    "CHEUNG SHA WAN",
+    "KOWLOON TONG",
+    "HUNG HOM",
+    "TO KWA WAN",
+    "KWUN TONG",
+    "KOWLOON BAY"
+]
 
 //document.getElementById("en1").style.animation = "txtScroll 5s linear infinite"
 //getRouteInfo(com,route,bound)
@@ -38,14 +68,18 @@ function DateToTime(datetime){
 }
 
 async function getRouteInfo(com,route,bound){
-    
-
-    let fetchRes = await fetch(baseURL + "/route-stop/" + com + "/" + route + "/" + bound)
+    if(com=="KMB"){
+        var fetchRes = await fetch(KMBbaseURL + "/route-stop/" + route + "/" + bound + "/" + 1)
+    }
+    else{
+        var fetchRes = await fetch(baseURL + "/route-stop/" + com + "/" + route + "/" + bound)
+    }
     orgRouteStopId = JSON.parse(await fetchRes.text())
     console.log(orgRouteStopId)
     for(var i in orgRouteStopId.data){
         var stopsInfo = orgRouteStopId.data[i]
         logs.innerHTML += "Loading stop " + stopsInfo.stop + ": " + i + "/" + orgRouteStopId.data.length + "<br>"
+        instr.innerHTML = "Please wait... (" + i + "/" + orgRouteStopId.data.length + ")"
         await getStopEta(com,stopsInfo.stop,route)
         await getStop(stopsInfo.stop)
     }
@@ -74,18 +108,29 @@ async function getRouteInfo(com,route,bound){
  *
  */
 async function getStop(stop){
-    let fetchRes = await fetch(baseURL + "/stop/" + stop)
+    if(com=="KMB"){
+        var bURL = KMBbaseURL
+    }
+    else{
+        var bURL = baseURL
+    }
+    let fetchRes = await fetch(bURL + "/stop/" + stop)
     var orgStopList = JSON.parse(await fetchRes.text())
     let orgStopData = orgStopList.data;
     let nametc = orgStopData.name_tc
     let nameen = orgStopData.name_en
-    routeStopInfo[stop] = [stringProcess(nametc),stringProcess(nameen)]
+    routeStopInfo[stop] = [stringProcess(nametc,false),stringProcess(nameen,true)]
     routeStopIds.push(stop)
 }
-function stringProcess(strname){
+function stringProcess(strname,isEn){
     let strfin = strname;
-    if(strname.indexOf(",")!=-1){
+    if(strname.indexOf(",")!=-1){ //CTB/NWFB, check street name
         strfin = strfin.substr(0,strname.indexOf(","))
+    }
+    
+    if((strname[strname.length-1]==")")&&(strname[strname.length-2] in numbersArr)){ //KMB, check platform code
+        strfin = strfin.substr(0,strname.indexOf("("))
+        console.log(strfin)
     }
     return strfin
 }
@@ -97,7 +142,12 @@ function stringProcess(strname){
  * @param {String} route The Route ID
  */
 async function getStopEta(com,stop,route){
-    let fetchRes = await fetch(baseURL + "/eta/" + com + "/" + stop + "/" + route)
+    if(com=="KMB"){
+        var fetchRes = await fetch(KMBbaseURL + "/eta/" + stop + "/" + route + "/1")
+    }
+    else{
+        var fetchRes = await fetch(baseURL + "/eta/" + com + "/" + stop + "/" + route)
+    }
     var orgEta = JSON.parse(await fetchRes.text())
     let orgEtaData = orgEta.data
     //console.log(orgEta)
@@ -145,7 +195,12 @@ var curstop_id
  * @param {String} route The Route ID
  */
  async function getStopEtaJSON(com,stop,route){
-    let urlFetch = baseURL + "/eta/" + com + "/" + stop + "/" + route
+    if(com=="KMB"){
+        var urlFetch = KMBbaseURL + "/eta/" + stop + "/" + route + "/1"
+    }
+    else{
+        var urlFetch = (baseURL + "/eta/" + com + "/" + stop + "/" + route)
+    }
     console.log(urlFetch)
     let fetchRes = await fetch(urlFetch)
     var orgEta = JSON.parse(await fetchRes.text())
@@ -185,6 +240,7 @@ function prepareForLoop(){
     stopSelect()
 }
 
+var type = 0
 function stopSelect(){
     secs++
     console.log(curstop_json)
@@ -198,7 +254,9 @@ function stopSelect(){
         let pmise = getStopEtaJSON(com,curstop_id,route)
         pmise.then(function(value){
             curstop_json = value
-            setTxtDisplay()
+            if(value!=null){
+                setTxtDisplay()
+            }
         })
         
     }
@@ -208,16 +266,47 @@ function stopSelect(){
         let pmise = getStopEtaJSON(com,routeStopIds[routeStopIds.indexOf(curstop_id)+1],route)
         pmise.then(function(value){
             curstop_json = value
-            setTxtDisplay()
+            if(value!=null){
+                setTxtDisplay()
+                setImgDisplay()
+            }
         })
+    }
+
+    document.getElementById("minLeft").innerHTML = Math.ceil(timeleft/1000/60) + "<br>min"
+
+    console.log(secs)
+    if(secs%20==0){
+        type++
+        //console.log(type)
+        if(type>3){
+            type=0
+        }
+        switchInfo(type)
     }
     
     //setTxtDisplay()
+    //switchInfo(secs)
     setImgDisplay(timeleft,(new Date(curstop_json.ETA).getMinutes()))
     setTimeout(stopSelect,1000)
 
 
 }
+
+
+function switchInfo(type){
+    //console.log(type)
+    if(type==0){
+        setTxtDisplay()
+    }
+    else if(type==1){
+        setTxtDisplay()
+    }
+    else if(type==2){
+        setDesDisplay()
+    }
+}
+
 
 function setTextSize(text,isEn){
     if(!isEn){
@@ -252,12 +341,19 @@ async function setTxtDisplay(){
         txtDisplay.push(document.getElementById("tc3"))
         txtDisplayEn.push(document.getElementById("en3"))
 
+        document.getElementById("stopimg2").src = "Stop_" + com + ".png"
+        document.getElementById("stopimg3").src = "Stop_" + com + ".png"
+
         document.getElementById("tc1").innerHTML = routeStopInfo[curstop_json.stop][0]
         document.getElementById("en1").innerHTML = routeStopInfo[curstop_json.stop][1]
-        document.getElementById("tc2").innerHTML = routeStopInfo[routeStopIds[routeStopIds.indexOf(curstop_json.stop)+1]][0]
-        document.getElementById("en2").innerHTML = routeStopInfo[routeStopIds[routeStopIds.indexOf(curstop_json.stop)+1]][1]
-        document.getElementById("tc3").innerHTML = routeStopInfo[routeStopIds[routeStopIds.indexOf(curstop_json.stop)+2]][0]
-        document.getElementById("en3").innerHTML = routeStopInfo[routeStopIds[routeStopIds.indexOf(curstop_json.stop)+2]][1]
+        if(routeStopInfo[routeStopIds[routeStopIds.indexOf(curstop_json.stop)+1]][0]!=undefined){
+            document.getElementById("tc2").innerHTML = routeStopInfo[routeStopIds[routeStopIds.indexOf(curstop_json.stop)+1]][0]
+            document.getElementById("en2").innerHTML = routeStopInfo[routeStopIds[routeStopIds.indexOf(curstop_json.stop)+1]][1]
+        }
+        if(routeStopInfo[routeStopIds[routeStopIds.indexOf(curstop_json.stop)+2]][0]!=undefined){
+            document.getElementById("tc3").innerHTML = routeStopInfo[routeStopIds[routeStopIds.indexOf(curstop_json.stop)+2]][0]
+            document.getElementById("en3").innerHTML = routeStopInfo[routeStopIds[routeStopIds.indexOf(curstop_json.stop)+2]][1]
+        }
 
         /*
         for(let i in txtDisplay){ // TODO seperate top and bottom text && MAke it into a new function
@@ -290,7 +386,7 @@ async function setTxtDisplay(){
         */
         if(document.getElementById("tc1").innerHTML.length>=8){
             document.getElementById("tc1").style.animationName = "txtScroll"
-            document.getElementById("tc1").style.animationDuration = document.getElementById("tc1").innerHTML.length/1.5 + "s"
+            document.getElementById("tc1").style.animationDuration = document.getElementById("tc1").innerHTML.length/1.25 + "s"
             document.getElementById("tc1").style.animationTimingFunction = "linear"
             document.getElementById("tc1").style.animationIterationCount = "infinite"
         }
@@ -311,14 +407,16 @@ async function setTxtDisplay(){
         else{
             document.getElementById("en1").style.animationName = ""
         }
-        console.log(txtDisplayEn[0])
+        //console.log(txtDisplayEn[0])
     }
     
 }
 
-function setImgDisplay(tLeft, etamin, light){
+function setImgDisplay(secs, etamin, light){
     let stopimg = document.getElementById("stopimg1")
-    if(etamin==new Date().getMinutes){
+    //console.log(eatmin)
+    //console.log(new Date().getMinutes())
+    if(etamin==new Date().getMinutes()){
         if(com=="CTB"){
             if(stopimg.getAttribute("src")=="Stop_CTB_arr.png"){
                 stopimg.src = "Stop_CTB_arr2.png"
@@ -356,4 +454,15 @@ function setImgDisplay(tLeft, etamin, light){
             }
         }
     }
+}
+
+function setDesDisplay(){
+    document.getElementById("tc2").innerHTML = "前往"
+    document.getElementById("en2").innerHTML = "Towards"
+    
+    document.getElementById("tc3").innerHTML = routeStopInfo[routeStopIds[routeStopIds.length-1]][0]
+    document.getElementById("en3").innerHTML = routeStopInfo[routeStopIds[routeStopIds.length-1]][1]
+
+    document.getElementById("stopimg2").src = "Stop_" + com + "_skip.png"
+    document.getElementById("stopimg3").src = "Stop_" + com + "_ter.png"
 }

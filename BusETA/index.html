@@ -28,14 +28,16 @@
             </select>
             <button onclick="prepareForLoop()">Start!</button>
         </div>
-        <div id="display" class="reset" style="height:fit-content; outline-color: black; outline-width: 25px;">
+        <div id="display" class="reset" style="height:fit-content; outline-color: black; outline-width: 25px; table-layout: fixed;">
             <table style="border-collapse: collapse;">
                 <tr style="height:50%">
                     <td><div style="z-index: 3; background-color: white;"><img  onclick="fullscreen()" id="stopimg1" src="Stop_KMB.png" class="img_top"></div></td>
-                    <td><table class="txt_top">
+                    <td ><table class="txt_top"  style="table-layout:fixed; width: 77vw;">
                         <tr><td><div id="tc1">WELCOME</div></td></tr>
                         <tr><td><div id="en1">WELCOME ONBOARD</div></td></tr>
                     </table></td>
+                    <td style="font-size: 5vw; text-align: center; z-index: -1; background-color: white; " id="minLeft">-<br>min</td>
+                    <td style="background-color: white; width:25vw"></td> <!--Temporary fix for the edges-->
                     
                 </tr>
                 <tr style="height:25%">
