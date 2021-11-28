@@ -120,6 +120,18 @@ async function getStopEta(com,stop,route){
     
 }
 
+function fullscreen(){
+    if (document.documentElement.requestFullscreen){
+      document.documentElement.requestFullscreen();
+    }
+    else if (document.documentElement.webkitRequestFullscreen){
+      document.documentElement.webkitRequestFullscreen();
+    }
+    else if (document.documentElement.msRequestFullscreen){
+      document.documentElement.msRequestFullscreen();
+    }
+}
+
 /////////////////LOOPS / MAIN PART////////////////////
 var secs = 0
 var curstop_json = {}
