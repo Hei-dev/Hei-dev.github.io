@@ -1,0 +1,37 @@
+<html>
+    <head>
+        
+    </head>
+    <body style="color: white; background-color: black;">
+        To use the app, use function decimalToRgb(decimal_value) or rgbToDecimal(rgb_array)
+        <br>rgb_string format: [R, G, B] 
+    </body>
+    <script>
+
+
+        /**
+        * Convert a Scratch decimal color to an RGB color object.
+        * https://github.com/LLK/scratch-vm/blob/f31c630f9d195aafdcfdfb47542ad931e184e00a/src/util/color.js#L45
+        * @param {number} decimal RGB color as decimal.
+        * @return {RGBObject} rgb - {r: red [0,255], g: green [0,255], b: blue [0,255]}.
+        */
+        function decimalToRgb (decimal) {
+            const a = (decimal >> 24) & 0xFF;
+            const r = (decimal >> 16) & 0xFF;
+            const g = (decimal >> 8) & 0xFF;
+            const b = decimal & 0xFF;
+            return {r: r, g: g, b: b, a: a > 0 ? a : 255};
+        }
+
+        /**
+         * Convert an RGB color object to a Scratch decimal color.
+         * @param {RGBObject} rgb - {r: red [0,255], g: green [0,255], b: blue [0,255]}.
+         * @return {!number} Number representing the color.
+         */
+        function rgbToDecimal (rgba) {
+            let rgb = {r: rgba[0],g: rgba[1], b: rgba[2]}
+            return (rgb.r << 16) + (rgb.g << 8) + rgb.b;
+        }
+
+    </script>
+</html>
