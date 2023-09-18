@@ -56,22 +56,22 @@ var getIc = function(num){
   else if(num == 71){
     return "<img src='https://www.hko.gov.hk/images/HKOWxIconOutline/pic71.png' style='width:50px; height:50px'/>"
   }
-  else if(num == 71){
+  else if(num == 72){
     return "<img src='https://www.hko.gov.hk/images/HKOWxIconOutline/pic72.png' style='width:50px; height:50px'/>"
   }
-  else if(num == 71){
+  else if(num == 73){
     return "<img src='https://www.hko.gov.hk/images/HKOWxIconOutline/pic73.png' style='width:50px; height:50px'/>"
   }
-  else if(num == 71){
+  else if(num == 74){
     return "<img src='https://www.hko.gov.hk/images/HKOWxIconOutline/pic74.png' style='width:50px; height:50px'/>"
   }
-  else if(num == 71){
+  else if(num == 75){
     return "<img src='https://www.hko.gov.hk/images/HKOWxIconOutline/pic75.png' style='width:50px; height:50px'/>"
   }
-  else if(num == 71){
+  else if(num == 76){
     return "<img src='https://www.hko.gov.hk/images/HKOWxIconOutline/pic76.png' style='width:50px; height:50px'/>"
   }
-  else if(num == 71){
+  else if(num == 77){
     return "<img src='https://www.hko.gov.hk/images/HKOWxIconOutline/pic77.png' style='width:50px; height:50px'/>"
   }
   else if(num == 80){
